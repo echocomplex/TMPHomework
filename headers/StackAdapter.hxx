@@ -28,56 +28,56 @@ public:
 
 
 
-template <typename T> StackAdapter<T>::StackAdapter (unsigned long long* nop) noexcept {
+template <typename T> StackAdapter<T>::StackAdapter (unsigned long long* nop) noexcept { // O(1)
     this->nop = nop;
     this->unit = new Stack <T> (nop);
     *this->nop += 3;
 }
 
 
-template <typename T> StackAdapter<T>::~StackAdapter () noexcept {
+template <typename T> StackAdapter<T>::~StackAdapter () noexcept { // O(1)
     ++*this->nop;
     delete this->unit;
 }
 
 
-template <typename T> void StackAdapter<T>::push (T element) {
+template <typename T> void StackAdapter<T>::push (T element) { // O(1)
     ++*this->nop;
     this->unit->push(element);
 }
 
 
-template <typename T> T StackAdapter<T>::pop () {
+template <typename T> T StackAdapter<T>::pop () { // O(1) or 5
     ++*this->nop;
     return this->unit->pop();
 }
 
 
-template <typename T> T StackAdapter<T>::peek () {
+template <typename T> T StackAdapter<T>::peek () { // O(1) or 4
     ++*this->nop;
     return this->unit->peek();
 }
 
 
-template <typename T> bool StackAdapter<T>::isEmpty () noexcept {
+template <typename T> bool StackAdapter<T>::isEmpty () noexcept { // O(1) or 3
     ++*this->nop;
     return this->unit->isEmpty();
 }
 
 
-template <typename T> bool StackAdapter<T>::isFull () noexcept {
+template <typename T> bool StackAdapter<T>::isFull () noexcept { // O(1) or 3
     ++*this->nop;
     return this->unit->isFull();
 }
 
 
-template <typename T> short StackAdapter<T>::size () noexcept {
+template <typename T> short StackAdapter<T>::size () noexcept { // O(1) or 3
     ++*this->nop;
     return this->unit->size();
 }
 
 
-template <typename T> T& StackAdapter<T>::operator[] (short index) {
+template <typename T> T& StackAdapter<T>::operator[] (short index) { // O(2n) or (27+8n)
     ++*this->nop;
     if (this->unit->isEmpty()) {
         throw std::underflow_error("Stack underflow");
@@ -124,7 +124,7 @@ template <typename T> T& StackAdapter<T>::operator[] (short index) {
 }
 
 
-template <typename T> void StackAdapter<T>::sort () {
+template <typename T> void StackAdapter<T>::sort () { // O(2n + n^2) or (9 + 15n + 15n^2)
     ++*this->nop;
     if (this->unit->isEmpty()) {
         throw std::underflow_error("Stack underflow");

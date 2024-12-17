@@ -30,7 +30,7 @@ public:
 
 
 
-template <typename T> Stack<T>::Stack (unsigned long long* nop) noexcept {
+template <typename T> Stack<T>::Stack (unsigned long long* nop) noexcept { // O(1) or 3
     this->nop = nop;
     this->arr = new T [STACK_SIZE];
     this->last = -1;
@@ -38,13 +38,13 @@ template <typename T> Stack<T>::Stack (unsigned long long* nop) noexcept {
 }
 
 
-template <typename T> Stack<T>::~Stack () noexcept {
+template <typename T> Stack<T>::~Stack () noexcept { // O(1) or 1
     ++*this->nop;
     delete[] this->arr;
 }
 
 
-template <typename T> void Stack<T>::push (T element) {
+template <typename T> void Stack<T>::push (T element) { // O(1) or 4
     *this->nop += 2;
     if (this->last + 1 >= STACK_SIZE) {
         throw std::overflow_error("Stack overflow");
@@ -54,7 +54,7 @@ template <typename T> void Stack<T>::push (T element) {
 }
 
 
-template <typename T> T Stack<T>::pop () {
+template <typename T> T Stack<T>::pop () { // O(1) or 4
     ++*this->nop;
     if (this->last == -1) {
         throw std::underflow_error("Stack underflow");
@@ -64,7 +64,7 @@ template <typename T> T Stack<T>::pop () {
 }
 
 
-template <typename T> T Stack<T>::peek () {
+template <typename T> T Stack<T>::peek () { // O(1) or 3
     ++*this->nop;
     if (this->last == -1) {
         throw std::underflow_error("Stack underflow");
@@ -74,25 +74,25 @@ template <typename T> T Stack<T>::peek () {
 }
 
 
-template <typename T> bool Stack<T>::isEmpty () noexcept {
+template <typename T> bool Stack<T>::isEmpty () noexcept { // O(1) or 2
     *this->nop += 2;
     return this->last <= -1;
 }
 
 
-template <typename T> bool Stack<T>::isFull () noexcept {
+template <typename T> bool Stack<T>::isFull () noexcept { // O(1) or 2
     *this->nop += 2;
     return this->last >= STACK_SIZE - 1;
 }
 
 
-template <typename T> short Stack<T>::size () noexcept {
+template <typename T> short Stack<T>::size () noexcept { // O(1) or 2
     *this->nop += 2;
     return this->last + 1;
 }
 
 
-template <typename T> T& Stack<T>::peekWithPointer () {
+template <typename T> T& Stack<T>::peekWithPointer () { // O(1) or 3
     ++*this->nop;
     if (this->last == -1) {
         throw std::underflow_error("Stack underflow");

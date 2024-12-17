@@ -1,19 +1,40 @@
 #include <Stack.hxx>
 #include <StackAdapter.hxx>
 #include <iostream>
+#include <chrono>
+#include <ctime>
+#include <cstdlib>
 
 
-int main () {
+int main (int argc, const char** argv) {
+    unsigned int n;
+    if (argc >= 2) {
+        n = std::atoi(argv[1]);
+    }
+    else {
+        n = 300;
+    }
+    
+    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+    
     unsigned long long nop = 0;
-    StackAdapter <int> unit(&nop);
-    unit.push(4);
-    unit.push(3);
-    unit.push(2);
-    unit.push(1);
+    StackAdapter <short> unit(&nop);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < n; ++i) {
+        unit.push(rand() % 30000);
+    }
+    
+    start = std::chrono::high_resolution_clock::now();
+
     unit.sort();
-    std::cout << "Sorted stack >>> ";
-    for (short i = 0; i < unit.size(); ++i) std::cout << unit[i] << ' ';
-    std::cout << std::endl;
-    std::cout << "NOP >>> " << nop << std::endl;
+
+    end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+
+    std::cout << "N = " << n << std::endl << "Time: " << elapsed.count() << std::endl << "NOP = " << nop << std::endl;
+    
     return 0;
 }
